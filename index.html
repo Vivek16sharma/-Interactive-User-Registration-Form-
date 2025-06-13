@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Interactive User Registration Form</title>
+<!-- Google Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <form class="registration-form" id="registrationForm" novalidate>
+    <h1>User Registration</h1>
+    <div class="form-group inline-group">
+      <div style="flex:1;">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" placeholder="Your first name" autocomplete="given-name" required />
+        <div class="error-message" aria-live="polite"></div>
+      </div>
+      <div style="flex:1;">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" placeholder="Your last name" autocomplete="family-name" required />
+        <div class="error-message" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="email@example.com" autocomplete="email" required />
+      <div class="error-message" aria-live="polite"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter password" required minlength="8" aria-describedby="passwordHelp" />
+      <div id="passwordHelp" class="help-text">
+        Minimum 8 characters with letters and numbers
+      </div>
+      <div class="error-message" aria-live="polite"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required aria-describedby="confirmPasswordHelp" />
+      <div id="confirmPasswordHelp" class="help-text">
+        Must match the password
+      </div>
+      <div class="error-message" aria-live="polite"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" required max="9999-12-31" />
+      <div class="error-message" aria-live="polite"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Gender</label>
+      <div class="gender-options" role="radiogroup" aria-labelledby="genderLabel">
+        <label><input type="radio" name="gender" value="male" required /> Male</label>
+        <label><input type="radio" name="gender" value="female" /> Female</label>
+        <label><input type="radio" name="gender" value="other" /> Other</label>
+        <label><input type="radio" name="gender" value="preferNotToSay" /> Prefer not to say</label>
+      </div>
+      <div class="error-message" aria-live="polite"></div>
+    </div>
+
+    <div class="form-group terms">
+      <input type="checkbox" id="terms" name="terms" required />
+      <label for="terms">I agree to the <a href="#" class="terms-link">terms and conditions</a></label>
+      <div class="error-message" aria-live="polite"></div>
+    </div>
+
+    <button type="submit" aria-label="Submit Registration Form">Register</button>
+  </form>
+
+<script>
+  (function() {
+    const form = document.getElementById('registrationForm');
+
+    function setError(input, message) {
+      const errorDiv = input.parentElement.querySelector('.error-message');
+      if (errorDiv) errorDiv.textContent = message;
+      input.setAttribute('aria-invalid', 'true');
+    }
+    function clearError(input) {
+      const errorDiv = input.parentElement.querySelector('.error-message');
+      if (errorDiv) errorDiv.textContent = '';
+      input.removeAttribute('aria-invalid');
+    }
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    function validatePassword(password) {
+      return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
+    }
+    function validateForm() {
+      let valid = true;
+
+      // First Name
+      const firstNameInput = form.elements['firstName'];
+      if (!firstNameInput.value.trim()) {
+        setError(firstNameInput, 'First name is required.');
+        valid = false;
+      } else {
+        clearError(firstNameInput);
+      }
+      
+      // Last Name
+      const lastNameInput = form.elements['lastName'];
+      if (!lastNameInput.value.trim()) {
+        setError(lastNameInput, 'Last name is required.');
+        valid = false;
+      } else {
+        clearError(lastNameInput);
+      }
+      
+      // Email
+      const emailInput = form.elements['email'];
+      if (!emailInput.value.trim()) {
+        setError(emailInput, 'Email is required.');
+        valid = false;
+      } else if (!validateEmail(emailInput.value.trim())) {
+        setError(emailInput, 'Please enter a valid email address.');
+        valid = false;
+      } else {
+        clearError(emailInput);
+      }
+      
+      // Password
+      const passwordInput = form.elements['password'];
+      if (!passwordInput.value) {
+        setError(passwordInput, 'Password is required.');
+        valid = false;
+      } else if (!validatePassword(passwordInput.value)) {
+        setError(passwordInput, 'Password must be at least 8 characters including letters and numbers.');
+        valid = false;
+      } else {
+        clearError(passwordInput);
+      }
+      
+      // Confirm Password
+      const confirmPasswordInput = form.elements['confirmPassword'];
+      if (!confirmPasswordInput.value) {
+        setError(confirmPasswordInput, 'Please confirm your password.');
+        valid = false;
+      } else if (confirmPasswordInput.value !== passwordInput.value) {
+        setError(confirmPasswordInput, 'Passwords do not match.');
+        valid = false;
+      } else {
+        clearError(confirmPasswordInput);
+      }
+      
+      // DOB
+      const dobInput = form.elements['dob'];
+      if (!dobInput.value) {
+        setError(dobInput, 'Date of birth is required.');
+        valid = false;
+      } else {
+        clearError(dobInput);
+      }
+      
+      // Gender (radio)
+      const genderInputs = form.elements['gender'];
+      let genderSelected = false;
+      for (let input of genderInputs) {
+        if (input.checked) {
+          genderSelected = true;
+          break;
+        }
+      }
+      const genderErrorDiv = form.querySelector('.gender-options').parentElement.querySelector('.error-message');
+      if (!genderSelected) {
+        genderErrorDiv.textContent = 'Please select your gender.';
+        valid = false;
+      } else {
+        genderErrorDiv.textContent = '';
+      }
+      
+      // Terms
+      const termsInput = form.elements['terms'];
+      if (!termsInput.checked) {
+        setError(termsInput, 'You must agree to the terms and conditions.');
+        valid = false;
+      } else {
+        clearError(termsInput);
+      }
+      
+      return valid;
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (validateForm()) {
+        alert('Registration successful! Thank you.');
+        form.reset();
+      } else {
+        const firstError = form.querySelector('[aria-invalid="true"]');
+        if (firstError) firstError.focus();
+      }
+    });
+  })();
+</script>
+</body>
+</html>

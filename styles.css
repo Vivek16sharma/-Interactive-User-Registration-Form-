@@ -1,0 +1,155 @@
+/* Reset & base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  background: linear-gradient(135deg, #2e003e, #130f40);
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+/* Container styling */
+.registration-form {
+  background: rgba(30, 20, 60, 0.85);
+  padding: 32px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 24px rgba(107, 66, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.registration-form h1 {
+  font-weight: 800;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 0;
+  background: linear-gradient(90deg, #a259ff, #0fc0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Form groups */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group.inline-group {
+  flex-direction: row;
+  gap: 16px;
+}
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #b0acec;
+  user-select: none;
+}
+/* Inputs and selects*/
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select {
+  background: #1f143d;
+  border: 2px solid #453575;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  color: #e0e0e0;
+  transition: border-color 0.3s ease;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+select:focus {
+  border-color: #a259ff;
+  outline: none;
+  box-shadow: 0 0 10px #a259ff88;
+}
+/* Gender options */
+.gender-options {
+  display: flex;
+  gap: 24px;
+  margin-top: 4px;
+}
+.gender-options label {
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: #c0b9f7;
+}
+input[type="radio"] {
+  accent-color: #a259ff;
+  cursor: pointer;
+}
+/* Terms */
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+  font-size: 0.9rem;
+  color: #c0b9f7;
+}
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #a259ff;
+  cursor: pointer;
+}
+.terms-link {
+  color: #a259ff;
+  text-decoration: underline;
+}
+/* Submit button */
+button[type="submit"] {
+  background: linear-gradient(90deg, #a259ff, #0fc0ff);
+  border: none;
+  padding: 16px;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.4s ease;
+  box-shadow: 0 6px 15px #683affcc;
+}
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+  background: linear-gradient(90deg, #8a3dff, #07a9ff);
+  box-shadow: 0 8px 20px #5400e7cc;
+  outline: none;
+}
+/* Validation error messages */
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-top: 6px;
+  font-weight: 600;
+}
+/* Help text style */
+.help-text {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 4px;
+}
+/* Responsive - Mobile first */
+@media (max-width: 440px) {
+  .form-group.inline-group {
+    flex-direction: column;
+  }
+}
